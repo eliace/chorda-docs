@@ -10,5 +10,3 @@
 - [Контекст](DataFlow.md)
 - [API](Api.md)
 - [How to](Other.md)
-- Статьи
-  - [Новая](article.md)
