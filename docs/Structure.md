@@ -67,19 +67,20 @@ new Html({
 });
 ```
 При использовании шаблонов, опция `components` начинает играть роль активатора. Причем, это не означает, что, в качестве значений активаторов могут выступать только `true` или `false`. Если мы укажем активатором опции, они будут объединены с опциями шаблона
-
-    new Html({
-        $input: {
-            html: 'input'
-        },
-        components: {
-            input: {
-                type: 'checkbox'
-            }
+```javascript
+new Html({
+    $input: {
+        html: 'input'
+    },
+    components: {
+        input: {
+            type: 'checkbox'
         }
-    });
+    }
+});
 
-    // после отрисовки мы получим <div><input type="checkbox"></div>
+// после отрисовки мы получим <div><input type="checkbox"></div>
+```
 
 <div class="alert is-info">
 С помощью шаблонов и активаторов реализуется условное конструирование (if-else). 
@@ -90,27 +91,28 @@ new Html({
 
 ## Элементы
 Элементы `items` управляются как последовательный набор объектов, список. Отражением `items` является базовый класс `Array`. Как правило это используется, когда количество компонентов заранее неивестно или все объекты создаются по одному шаблону.
-
-    new Html({
-        items: [
-            {html: 'button', text: 'Button 1'},
-            {html: 'button', text: 'Button 2'},
-            {html: 'button', text: 'Button 3'},
-        ]
-    });
+```javascript
+new Html({
+    items: [
+        {html: 'button', text: 'Button 1'},
+        {html: 'button', text: 'Button 2'},
+        {html: 'button', text: 'Button 3'},
+    ]
+});
+```
 
 Элементы не обладают свойством аддитивности
+```javascript
+const html = new Html({
+    items: [{text: 'Coffee'}]
+});
 
-    const html = new Html({
-        items: [{text: 'Coffee'}]
-    });
+console.log(html.items); // [{text: 'Coffee'}]
 
-    console.log(html.items); // [{text: 'Coffee'}]
+html.opt('items', [{text: 'Tea'}]);
 
-    html.opt('items', [{text: 'Tea'}]);
-
-    console.log(html.items); // [{text: 'Tea'}]
-
+console.log(html.items); // [{text: 'Tea'}]
+```
 Для элементов нет аналога шаблонов
 
 <div class="alert is-info">
@@ -120,7 +122,7 @@ new Html({
 ## Фабрики
 Компоненты и элементы создаются с помощью фабрик `componentFactory` и `itemFactory` соответственно. 
 
-```
+```javascript
 new Html({
     itemFactory: function (options, context) {
         if (options.text == '-') {
@@ -152,7 +154,7 @@ new Html({
 
 Тип объекта задается опцией `as`. Вынося определение в отдельный класс, мы можем изолировать группу опций, чтобы легко ее подключать или отключать 
 
-```
+```javascript
 import { Button, Link } from './components';
 
 new Html({
@@ -168,7 +170,7 @@ new Html({
 ```
 Если бы мы вместо `as: Link` мы использовали `html: 'a'`, то пришлось бы перекрывать все опции, которые есть в `Button`, но которые не нужны для создания ссылки
 
-## Конструктор дочерних объектов
+## Конструкторы
 В качестве опций компонента или элемента могут быть указаны значения, тип которых отличен от `Object`:
 * `Boolean`
 * `String`
@@ -186,7 +188,7 @@ new Html({
 #### String и Number
 Особенностью конструктора элементов и компонентов является автоматическое приведение типов `String` и `Number` к форме {text: ...}. Таким образом заметно упрощается конфигурация элементов, которые отличаются только текстовым содержимым.
 
-```
+```javascript
 new List({
     items: ['Coffee', 'Tea', 'Milk']
 })
@@ -205,7 +207,7 @@ new List({
 #### Function
 Результатом работы указанной функции ожидается значение типа `Object`, которое будет использовано как набор опций. Функция будет вызвана при конструировании элемента или компонента
 
-```
+```javascript
 //module Page1
 
 export default () => {

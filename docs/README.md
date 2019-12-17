@@ -2,6 +2,6 @@
 permalink: /index.html
 ---
 
-# Headline
+# Chorda
 
-> An awesome project.
+Declarative web framework
